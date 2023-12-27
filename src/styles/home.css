@@ -1,0 +1,20 @@
+.bannerPic{
+    overflow: hidden;
+    text-align: center;
+    background-image: url("../assets/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 60vh;
+}
+.bannerTxt{
+    padding-top : 20vh
+}
+.hotel-card-img{
+    max-height: 20rem;
+}
+.hotel-card{
+    width: 20rem;
+}
+.setFlex{
+    margin-top: 50px;
+}

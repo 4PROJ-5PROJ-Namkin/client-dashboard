@@ -1,0 +1,14 @@
+.nodisplay{
+    display : none
+}
+.flexed{
+    display: flex;
+    column-gap: 10px;   
+}
+.flexed > div{
+    width: 50%;
+}
+.eighty{
+    width: 80%!important;
+    margin: auto;
+}

@@ -1,0 +1,14 @@
+.editP{
+    text-decoration: underline;
+    text-align: center;
+}
+.editDiv{
+    margin : auto;
+    padding-bottom : 10px;
+}
+.editSection{
+    display:none;
+}
+#edit-container{
+    padding-top: 0!important;
+}
