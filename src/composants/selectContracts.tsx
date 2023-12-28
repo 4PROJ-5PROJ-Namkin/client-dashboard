@@ -1,54 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Autocomplete from '@mui/lab/Autocomplete';
 import { TextField, Button } from '@mui/material';
+import { SelectContractsProps, Part } from '../props/types';
 
-type Part = {
-  id: number;
-  defaultPrice: number;
-};
+export default function SelectContracts(props: SelectContractsProps) {
+  const { rows, setRows, handleIdChange, handleQuantityChange, handlePriceChange, parts, setParts } = props;
+    useEffect(() => {
+      // Fetch parts data from API
+      fetch('http://localhost:3002/api/v1/part-information')
+        .then(response => response.json())
+        .then(data => setParts(data))
+        .catch(error => console.error('Error fetching parts data:', error));
+    }, []);
 
-type RowData = {
-  id: number;
-  quantity: number;
-  price: number;
-};
-
-export default function SelectContracts() {
-  const [parts, setParts] = useState<Part[]>([]);
-  const [rows, setRows] = useState<RowData[]>([{ id: 0, quantity: 0, price: 0 }]);
-
-  useEffect(() => {
-    // Fetch parts data from API
-    fetch('http://localhost:3002/api/v1/part-information')
-      .then(response => response.json())
-      .then(data => setParts(data))
-      .catch(error => console.error('Error fetching parts data:', error));
-  }, []);
-
-  const handleIdChange = (index: number, newPart: Part | null) => {
-    const newRows = [...rows];
-    const selectedPart = parts.find(part => part.id === newPart?.id);
-    newRows[index].id = newPart?.id || 0;
-    newRows[index].price = selectedPart?.defaultPrice || 0;
-
-    setRows(newRows);
-  };
-
-  const handleQuantityChange = (index: number, value: number) => {
-    const newRows = [...rows];
-    newRows[index].quantity = value;
-    setRows(newRows);
-  };
-
-  const handlePriceChange = (index: number, value: number) => {
-    const newRows = [...rows];
-    newRows[index].price = value;
-    setRows(newRows);
-  };
-
-  const addRow = () => {
-    setRows([...rows, { id: 0, quantity: 0, price: 0 }]);
-  };
 
   const styleProductSelector = {
     marginRight : '10px',
@@ -58,6 +22,9 @@ export default function SelectContracts() {
   const styleQuantity = {
     marginRight : '10px',
     width: '20%'
+  };
+  const addRow = () => {
+    setRows([...rows, { id: 0, quantity: 0, price: 0 }]);
   };
 
   return (
