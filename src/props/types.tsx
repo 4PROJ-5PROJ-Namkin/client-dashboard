@@ -7,7 +7,18 @@ export type RowData = {
   export type Part = {
     id: number;
     defaultPrice: number;
+    Price: number;
+
   };
+  export type Contract = {
+    id: string;
+    contract_number: string;
+    client_name: string;
+    date: string;
+    cash: number[];
+    parts: number[];
+}
+
   
   export type SelectContractsProps = {
     rows: RowData[];

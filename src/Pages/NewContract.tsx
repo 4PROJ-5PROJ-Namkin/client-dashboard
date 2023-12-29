@@ -14,7 +14,7 @@ import {
 from 'mdb-react-ui-kit';
 
 export default function Contract() {
-    const [rows, setRows] = useState<RowData[]>([{ id: 0, quantity: 0, price: 0 }]);
+    const [rows, setRows] = useState<RowData[]>([{ id: 0, quantity: 1, price: 0 }]);
     const [parts, setParts] = useState<Part[]>([]);
     const [client_name, setName] = useState<string>('');
     const [contract_number, setCnumber] = useState<string>('');
@@ -94,10 +94,24 @@ export default function Contract() {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split('T')[0];
 
-    console.log(parts.map(({ defaultPrice }) => defaultPrice));
+    console.log( rows.map(({ price }) => price));
     const onSubmit = async () => {
+        let i = 0;
+        let j = 0;
+        let cash: number[] = [];
+        let partsTreated: number[] = [];
+        
+        while (i < rows.length) {
+            for (j = 0; j < rows[i].quantity; j++) {
+                cash.push(rows[i].price);
+                partsTreated.push(rows[i].id);
+            }
+            i++;
+        }
+        console.log(cash);
+        console.log(partsTreated);
         try {
-             await postContract(contract_number, client_name, parts.map(({ id }) => id), [1, 2, 3], date);
+             await postContract(contract_number, client_name, partsTreated, cash, date);
         } catch (error) {
             console.error('Error creating account:', error);
         }

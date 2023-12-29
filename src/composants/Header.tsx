@@ -14,7 +14,7 @@ import jwtDecode from "jwt-decode";
 
 var token = localStorage.getItem("token");
 
-var pages = ['Profil','Contrat','Classes', 'Logout'];
+var pages = ['Profil','Contrat','Contracts', 'Logout'];
 if(token == null  || token === "disconnected"){
     pages = ['Connexion', 'Inscription'];
 }
