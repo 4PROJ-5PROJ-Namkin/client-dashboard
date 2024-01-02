@@ -1,11 +1,13 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
-import "../styles/SingleClass.css";
+import "../styles/Contract.css";
 import { MDBContainer, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import SelectContracts from '../composants/selectContracts';
 import { RowData, Part } from '../props/types';
+import "../styles/Contract.css"
+
 
 interface ContractData {
     id: string;
@@ -34,7 +36,7 @@ export default function SingleContract() {
     const [client_name, setName] = useState<string>('');
     const [contract_number, setCnumber] = useState<string>('');
     const [date, setDate] = useState<Date>(new Date());
-    const currentDate = new Date();
+   const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split('T')[0];
 
     const computeTableRows = (): TableRowData[] => {
@@ -55,28 +57,31 @@ export default function SingleContract() {
     };
     const tableRows = computeTableRows();
     useEffect(() => {
-        fetch(`http://localhost:4002/api/v1/contracts/${id}`)
-            .then(response => response.json())
-            .then((data: ContractData) => {
-                setContractData(data);
-                setName(data.client_name);
-                setCnumber(data.contract_number);
-                setDate(new Date(data.date));
-                // Convert cash and parts arrays to RowData format
-                const convertedRows: RowData[] = data.cash.map((cash, index) => ({
-                    id: data.parts[index],
-                    quantity: 1, // Default quantity
-                    price: cash
-                }));
-                setRows(convertedRows);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error("Error fetching data: ", error);
-                setError(error);
-                setLoading(false);
-            });
-    }, [id]);
+    fetch(`http://localhost:4002/api/v1/contracts/${id}`)
+        .then(response => response.json())
+        .then((data: ContractData) => {
+            setContractData(data);
+            setName(data.client_name);
+            setCnumber(data.contract_number);
+            setDate(new Date(data.date));
+
+            // Convert cash and parts arrays to RowData format
+            const convertedRows: RowData[] = data.cash.map((cash, index) => ({
+                id: data.parts[index],
+                quantity: 1, // Default quantity
+                price: cash
+            }));
+
+            setRows(convertedRows);
+            setLoading(false);
+        })
+        .catch(error => {
+            console.error("Error fetching data: ", error);
+            setError(error);
+            setLoading(false);
+        });
+}, [id]);
+
 
     const handleIdChange = (index: number, newPart: Part | null) => {
         const newRows = [...rows];
@@ -108,37 +113,41 @@ export default function SingleContract() {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
-
+    console.log(rows)
     return (
         <div className='container-flex'>
             <MDBContainer className='card-container'>
                 <MDBCard className='card'>
 <MDBCardBody>
                         <h5 className="card-title">Contract Details</h5>
-                        <p><strong>ID:</strong> {contractData?.id}</p>
                         <p><strong>Contract Number:</strong> {contractData?.contract_number}</p>
                         <p><strong>Client Name:</strong> {contractData?.client_name}</p>
                         <p><strong>Date:</strong> {contractData?.date ? new Date(contractData.date).toLocaleString() : 'No date has been set'}</p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Cash</th>
-                                    <th>Parts</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {tableRows.map((row, index) => (
-                                    <tr key={index}>
-                                        <td>{row.cash}</td>
-                                        <td>{row.parts}</td>
-                                        <td>{row.quantity}</td>
+                        <div>
+                            <table className={"tableCenter"}>
+                                <thead>
+                                    <tr>
+                                        <th>Cash</th>
+                                        <th>Parts</th>
+                                        <th>Quantity</th>
+
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {tableRows.map((row, index) => (
+                                        <tr key={index}>
+                                            <td>{row.cash}</td>
+                                            <td>{row.parts}</td>
+                                            <td>{row.quantity}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </MDBCardBody>
                 </MDBCard>
-                <MDBBtn onClick={() => setIsEditing(!isEditing)}>Mettre à jour ce contrat</MDBBtn>
+                <button type="button"  className={"btn custom"}onClick={() => setIsEditing(!isEditing)}>Mettre à jour ce contrat</button>
             </MDBContainer>
 
             {isEditing && (

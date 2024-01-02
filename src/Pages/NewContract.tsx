@@ -135,8 +135,7 @@ export default function Contract() {
                                 parts={parts}
                                 setParts={setParts}
                             />
-                            <MDBBtn className='w-100 mb-4' size='sm' onClick={onSubmit}>Valider</MDBBtn>
-
+                            <button type="button"  className={"btn custom"}onClick={onSubmit}>Valider</button>
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>

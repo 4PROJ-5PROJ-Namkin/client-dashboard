@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Autocomplete from '@mui/lab/Autocomplete';
 import { TextField, Button } from '@mui/material';
 import { SelectContractsProps, Part } from '../props/types';
+import "../styles/Contract.css"
 
 export default function SelectContracts(props: SelectContractsProps) {
   const { rows, setRows, handleIdChange, handleQuantityChange, handlePriceChange, parts, setParts } = props;
@@ -28,7 +29,7 @@ export default function SelectContracts(props: SelectContractsProps) {
   };
 
   return (
-    <div> 
+    <div className='AddParts'> 
       {rows.map((row, index) => (
         <div key={index} style={{ marginBottom: '10px' }}>
           <div style={{display : 'flex'}}>
@@ -59,7 +60,7 @@ export default function SelectContracts(props: SelectContractsProps) {
         </div>
       ))}
       <Button variant="contained" color="primary" onClick={addRow}>
-        Nouvelle ligne
+        +
       </Button>
     </div>
   );

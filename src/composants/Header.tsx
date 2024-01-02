@@ -14,7 +14,7 @@ import jwtDecode from "jwt-decode";
 
 var token = localStorage.getItem("token");
 
-var pages = ['Profil','Contrat','Contracts', 'Logout'];
+var pages = ['Ajout','Liste',  "Reports",  'Déconnexion'];
 if(token == null  || token === "disconnected"){
     pages = ['Connexion', 'Inscription'];
 }
@@ -45,7 +45,7 @@ function Header() {
 
     return (
         <AppBar sx={{
-           backgroundColor : "black" 
+           backgroundColor : "#ff5900" 
         }} position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>

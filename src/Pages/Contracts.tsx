@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import axios from 'axios';
-import "../styles/Class.css";
+import "../styles/Contract.css";
 import { Contract } from '../props/types';
 
 export default function Contracts() {
@@ -47,15 +47,14 @@ export default function Contracts() {
                             <div className="classSubItem">Contract Number: {contract.contract_number}</div>
                             <div className="classSubItem">Client Name: {contract.client_name}</div>
                             <div className="classSubItem">Date: {contract.date.toString().split('T')[0]}</div>
-                            <div className="classSubItem">Total Cash: {contract.cash.reduce((a: any, b: any) => a + b, 0)}</div>
+                            <div className="classSubItem">Total: {contract.cash.reduce((a: any, b: any) => a + b, 0)} €</div>
                         </a>
                     </li>
                 ))}
             </ul>
             <div className="bottombox">
                 <a href="/Contrat">Ajouter un contrat</a>
-                <a href="/classes/single">Chercher un contrat</a>
-            </div>
+                </div>
         </div>
     );
 }
