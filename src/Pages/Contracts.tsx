@@ -39,14 +39,16 @@ export default function Contracts() {
                 <button className="button" onClick={toggleSortOrder}>
                     Trier par numéro de contrat ({sortOrder === 'asc' ? 'Descendant' : 'Ascendant'})
                 </button>
-            </div>
+            </div>  
             <ul>
                 {sortedContracts.map((contract) => (
                     <li key={contract.id} className="classItem">
-                        <div className="classSubItem">Contract Number: {contract.contract_number}</div>
-                        <div className="classSubItem">Client Name: {contract.client_name}</div>
-                        <div className="classSubItem">Date: {contract.date.toString().split('T')[0]}</div>
-                        <div className="classSubItem">Total Cash: {contract.cash.reduce((a: any, b: any) => a + b, 0)}</div>
+                        <a href={"/contract/" + contract.id}>
+                            <div className="classSubItem">Contract Number: {contract.contract_number}</div>
+                            <div className="classSubItem">Client Name: {contract.client_name}</div>
+                            <div className="classSubItem">Date: {contract.date.toString().split('T')[0]}</div>
+                            <div className="classSubItem">Total Cash: {contract.cash.reduce((a: any, b: any) => a + b, 0)}</div>
+                        </a>
                     </li>
                 ))}
             </ul>

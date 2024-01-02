@@ -28,7 +28,7 @@ export default function App() {
         <Route path="Contracts" element={<Contracts />} />
         <Route path="Inscription" element={<Inscription />}/>
         {/* <Route path="classes/new" element={<NewClass />}/> */}
-        <Route path="contract/single/:id" element={<SingleContract />} />
+        <Route path="contract/:id" element={<SingleContract />} />
 
       </Routes>
     <footer>

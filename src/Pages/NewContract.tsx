@@ -108,8 +108,6 @@ export default function Contract() {
             }
             i++;
         }
-        console.log(cash);
-        console.log(partsTreated);
         try {
              await postContract(contract_number, client_name, partsTreated, cash, date);
         } catch (error) {
