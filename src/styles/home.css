@@ -4,7 +4,7 @@
     background-image: url("../assets/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 60vh;
+    height: 91vh;
 }
 .bannerTxt{
     padding-top : 20vh
@@ -17,4 +17,14 @@
 }
 .setFlex{
     margin-top: 50px;
+}
+.header{
+    height: 10vh;
+}
+.col-md-6{
+    width: auto!important;
+}
+.flexed-dist{
+    display: flex;
+    justify-content: space-between;
 }

@@ -94,7 +94,6 @@ export default function Contract() {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split('T')[0];
 
-    console.log( rows.map(({ price }) => price));
     const onSubmit = async () => {
         let i = 0;
         let j = 0;
@@ -143,7 +142,7 @@ export default function Contract() {
         </MDBContainer>
     );
 }
-export const postContract = async (contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
+const postContract = async (contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
     const body = {
         contract_number: contract_number,
         client_name: client_name,

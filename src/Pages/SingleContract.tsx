@@ -36,8 +36,7 @@ export default function SingleContract() {
     const [client_name, setName] = useState<string>('');
     const [contract_number, setCnumber] = useState<string>('');
     const [date, setDate] = useState<Date>(new Date());
-   const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().split('T')[0];
+    const formattedDate = contractData?.date.split('T')[0];
 
     const computeTableRows = (): TableRowData[] => {
         const rowMap = new Map<string, TableRowData>();
@@ -106,20 +105,48 @@ export default function SingleContract() {
       const updateParts = (updatedParts: Part[]) => {
         setParts(updatedParts);
     };
-
-    const onSubmitUpdate = async () => {
-        // Update logic
+    const deleteContract = async() => {
+        try {
+            if(contractData?.id !== undefined){
+             await removeContract(contractData?.id);
+            }
+            window.location.replace("/liste");
+        } catch (error) {
+            console.error('Error removing contract :', error);
+        }        
+    }
+    const onSubmit = async () => {
+        let i = 0;
+        let j = 0;
+        let cash: number[] = [];
+        let partsTreated: number[] = [];
+        
+        while (i < rows.length) {
+            for (j = 0; j < rows[i].quantity; j++) {
+                cash.push(rows[i].price);
+                partsTreated.push(rows[i].id);
+            }
+            i++;
+        }
+        try {
+            if(contractData?.id !== undefined){
+             await updateContract(contractData?.id, contract_number, client_name, partsTreated, cash, date);
+            }
+        } catch (error) {
+            console.error('Error updating contract:', error);
+        }
     };
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-    console.log(rows)
+    console.log(contractData?.date);
     return (
         <div className='container-flex'>
             <MDBContainer className='card-container'>
                 <MDBCard className='card'>
-<MDBCardBody>
-                        <h5 className="card-title">Contract Details</h5>
+                    <MDBCardBody>
+                        <div className='flexed-dist'>
+                            <h5 className="card-title">Contract Details</h5>
+                            <button onClick={deleteContract}><h5 className="card-title">Supprimer</h5></button>
+
+                        </div>
                         <p><strong>Contract Number:</strong> {contractData?.contract_number}</p>
                         <p><strong>Client Name:</strong> {contractData?.client_name}</p>
                         <p><strong>Date:</strong> {contractData?.date ? new Date(contractData.date).toLocaleString() : 'No date has been set'}</p>
@@ -137,7 +164,7 @@ export default function SingleContract() {
                                     {tableRows.map((row, index) => (
                                         <tr key={index}>
                                             <td>{row.cash}</td>
-                                            <td>{row.parts}</td>
+                                            <td>PART_NO_{row.parts}</td>
                                             <td>{row.quantity}</td>
                                         </tr>
                                     ))}
@@ -158,8 +185,8 @@ export default function SingleContract() {
                                 <MDBCardBody className='p-5 shadow-5 text-center'>
                                     <h2 className="fw-bold mb-5">Mise à jour du contrat</h2>
                                     <div className='flexed'>
-                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text' onChange={(e) => setCnumber(e.target.value)} />
-                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' onChange={(e) => setName(e.target.value)} />
+                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text' onChange={(e) => setCnumber(e.target.value)}  placeholder={contractData?.contract_number}/>
+                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' onChange={(e) => setName(e.target.value)} placeholder={contractData?.client_name}/>
                                     </div>
                             <MDBInput wrapperClass='mb-4' label='Date' id='date' type='date' value={formattedDate} onChange={(e) => setDate(new Date(e.target.value))}  />
                                     <SelectContracts
@@ -171,7 +198,9 @@ export default function SingleContract() {
                                         parts={parts}
                                         setParts={setParts}
                                     />
+                                    <button type="button"  className={"btn custom"}onClick={onSubmit}>Valider</button>
                                 </MDBCardBody>
+                                
                             </MDBCard>
                         </MDBCol>
                     </MDBRow>
@@ -181,11 +210,27 @@ export default function SingleContract() {
     );
 }
 
-function isAdmin(): boolean {
-    const token = localStorage.getItem("token");
-    if (!token || token === "disconnected") {
-        return false;
+const updateContract = async (contractId : string, contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
+    const body = {
+        contract_number: contract_number,
+        client_name: client_name,
+        parts: parts,
+        cash: cash,
+        date: date
+    };
+
+    try {
+        await axios.put('http://localhost:4002/api/v1/contracts/'+ contractId, body);
+    } catch (err) {
+        console.error('Could not update contract :', err);
+        throw err;
     }
-    const decoded: { role: string } = jwtDecode(token);
-    return decoded.role === "admin";
+}
+const removeContract = async (contractId : string): Promise<void> => {
+    try {
+        await axios.delete('http://localhost:4002/api/v1/contracts/'+ contractId);
+    } catch (err) {
+        console.error('Could not delete contract :', err);
+        throw err;
+    }
 }

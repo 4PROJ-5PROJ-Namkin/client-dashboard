@@ -20,7 +20,7 @@ export default function Connexion() {
         try {
             const data = await login(email, password);
             localStorage.setItem("token", data.data);
-            window.location.replace("/profil");
+            window.location.replace("/reports");
         } catch (error) {
             console.error('Connection error:', error);
             setShowLoginError(true); // Show login error
@@ -46,7 +46,7 @@ export default function Connexion() {
                         </div>
                     )}
                     <div className='text-center text-md-start mt-4 pt-2'>
-                        <MDBBtn className='w-100 mb-4' size='lg' onClick={connect}>Valider</MDBBtn>
+                        <button type="button"  className={"btn custom"}onClick={connect}>Valider</button>
                         <p className="small mt-2 pt-1 mb-2">Pas encore de compte ? <Link to={"/Inscription"}>Inscription</Link></p>
                     </div>
                 </MDBCol>

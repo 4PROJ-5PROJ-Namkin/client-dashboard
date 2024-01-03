@@ -53,8 +53,8 @@ export default function Contracts() {
                 ))}
             </ul>
             <div className="bottombox">
-                <a href="/Contrat">Ajouter un contrat</a>
-                </div>
+                <a type="button" href="/Ajout"  className={"btn custom"}>Valider</a>
+            </div>
         </div>
     );
 }

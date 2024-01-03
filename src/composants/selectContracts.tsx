@@ -6,13 +6,18 @@ import "../styles/Contract.css"
 
 export default function SelectContracts(props: SelectContractsProps) {
   const { rows, setRows, handleIdChange, handleQuantityChange, handlePriceChange, parts, setParts } = props;
-    useEffect(() => {
-      // Fetch parts data from API
-      fetch('http://localhost:3002/api/v1/part-information')
-        .then(response => response.json())
-        .then(data => setParts(data))
-        .catch(error => console.error('Error fetching parts data:', error));
-    }, []);
+  useEffect(() => {
+    fetch('http://localhost:3002/api/v1/part-information')
+      .then(response => response.json())
+      .then(data => {
+        const updatedParts = data.map((part: { id: string; }) => ({
+          ...part,
+          id: 'PART_NO_' + part.id
+        }));
+        setParts(updatedParts);
+      })
+      .catch(error => console.error('Error fetching parts data:', error));
+  }, []);
 
 
   const styleProductSelector = {
