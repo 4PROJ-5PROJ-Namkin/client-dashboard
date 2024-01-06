@@ -43,7 +43,7 @@ export default function Contracts() {
             <ul>
                 {sortedContracts.map((contract) => (
                     <li key={contract.id} className="classItem">
-                        <a href={"/contract/" + contract.id}>
+                        <a href={"/contract/" + contract.contract_number}>
                             <div className="classSubItem">Contract Number: {contract.contract_number}</div>
                             <div className="classSubItem">Client Name: {contract.client_name}</div>
                             <div className="classSubItem">Date: {contract.date.toString().split('T')[0]}</div>
@@ -53,7 +53,7 @@ export default function Contracts() {
                 ))}
             </ul>
             <div className="bottombox">
-                <a type="button" href="/Ajout"  className={"btn custom"}>Valider</a>
+                <a type="button" href="/Ajout"  className={"btn custom"}>Ajouter un contrat</a>
             </div>
         </div>
     );

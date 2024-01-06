@@ -10,15 +10,14 @@ export default function SelectContracts(props: SelectContractsProps) {
     fetch('http://localhost:3002/api/v1/part-information')
       .then(response => response.json())
       .then(data => {
-        const updatedParts = data.map((part: { id: string; }) => ({
+        const updatedParts = data.map((part: Part) => ({
           ...part,
-          id: 'PART_NO_' + part.id
+          displayId: 'PART_NO_' + part.id  // Add a displayId field
         }));
         setParts(updatedParts);
       })
       .catch(error => console.error('Error fetching parts data:', error));
   }, []);
-
 
   const styleProductSelector = {
     marginRight : '10px',
@@ -40,12 +39,13 @@ export default function SelectContracts(props: SelectContractsProps) {
           <div style={{display : 'flex'}}>
             <Autocomplete
               options={parts}
-              getOptionLabel={(option) => String(option.id)}
+              getOptionLabel={(option) => option.displayId}  // Use displayId for displaying options
               style={styleProductSelector}
               value={parts.find(part => part.id === row.id)}
               onChange={(event, newValue) => handleIdChange(index, newValue)}
               renderInput={(params) => <TextField {...params} label="Produit" />}
             />
+
 
             <TextField
               label="Quantité"

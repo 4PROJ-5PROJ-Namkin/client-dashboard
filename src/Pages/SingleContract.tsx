@@ -25,7 +25,8 @@ interface TableRowData {
 }
 
 export default function SingleContract() {
-    const { id } = useParams<{ id: string }>();
+    const { contract_number } = useParams<{ contract_number: string }>();
+    console.log("====" + contract_number);
     const [contractData, setContractData] = useState<ContractData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -34,7 +35,6 @@ export default function SingleContract() {
     const [rows, setRows] = useState<RowData[]>([{ id: 0, quantity: 1, price: 0 }]);
     const [parts, setParts] = useState<Part[]>([]);
     const [client_name, setName] = useState<string>('');
-    const [contract_number, setCnumber] = useState<string>('');
     const [date, setDate] = useState<Date>(new Date());
     const formattedDate = contractData?.date.split('T')[0];
 
@@ -56,12 +56,11 @@ export default function SingleContract() {
     };
     const tableRows = computeTableRows();
     useEffect(() => {
-    fetch(`http://localhost:4002/api/v1/contracts/${id}`)
+    fetch(`http://localhost:4002/api/v1/contracts/${contract_number}`)
         .then(response => response.json())
         .then((data: ContractData) => {
             setContractData(data);
             setName(data.client_name);
-            setCnumber(data.contract_number);
             setDate(new Date(data.date));
 
             // Convert cash and parts arrays to RowData format
@@ -79,7 +78,7 @@ export default function SingleContract() {
             setError(error);
             setLoading(false);
         });
-}, [id]);
+}, [contract_number]);
 
 
     const handleIdChange = (index: number, newPart: Part | null) => {
@@ -107,10 +106,10 @@ export default function SingleContract() {
     };
     const deleteContract = async() => {
         try {
-            if(contractData?.id !== undefined){
-             await removeContract(contractData?.id);
+            if(contract_number !== undefined){
+             await removeContract(contract_number);
             }
-            window.location.replace("/liste");
+        //    window.location.replace("/liste");
         } catch (error) {
             console.error('Error removing contract :', error);
         }        
@@ -129,8 +128,8 @@ export default function SingleContract() {
             i++;
         }
         try {
-            if(contractData?.id !== undefined){
-             await updateContract(contractData?.id, contract_number, client_name, partsTreated, cash, date);
+            if(contract_number !== undefined){
+             await updateContract(contract_number, client_name, partsTreated, cash, date);
             }
         } catch (error) {
             console.error('Error updating contract:', error);
@@ -185,7 +184,7 @@ export default function SingleContract() {
                                 <MDBCardBody className='p-5 shadow-5 text-center'>
                                     <h2 className="fw-bold mb-5">Mise à jour du contrat</h2>
                                     <div className='flexed'>
-                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text' onChange={(e) => setCnumber(e.target.value)}  placeholder={contractData?.contract_number}/>
+                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text'   value={contractData?.contract_number}/>
                                         <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' onChange={(e) => setName(e.target.value)} placeholder={contractData?.client_name}/>
                                     </div>
                             <MDBInput wrapperClass='mb-4' label='Date' id='date' type='date' value={formattedDate} onChange={(e) => setDate(new Date(e.target.value))}  />
@@ -210,9 +209,8 @@ export default function SingleContract() {
     );
 }
 
-const updateContract = async (contractId : string, contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
+const updateContract = async ( contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
     const body = {
-        contract_number: contract_number,
         client_name: client_name,
         parts: parts,
         cash: cash,
@@ -220,15 +218,15 @@ const updateContract = async (contractId : string, contract_number: string, clie
     };
 
     try {
-        await axios.put('http://localhost:4002/api/v1/contracts/'+ contractId, body);
+        await axios.put('http://localhost:4002/api/v1/contracts/'+ contract_number, body);
     } catch (err) {
         console.error('Could not update contract :', err);
         throw err;
     }
 }
-const removeContract = async (contractId : string): Promise<void> => {
+const removeContract = async (contract_number : string): Promise<void> => {
     try {
-        await axios.delete('http://localhost:4002/api/v1/contracts/'+ contractId);
+        await axios.delete('http://localhost:4002/api/v1/contracts/'+ contract_number);
     } catch (err) {
         console.error('Could not delete contract :', err);
         throw err;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,25 +9,33 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 
-
+interface MyToken extends JwtPayload {
+    role?: string;
+  }
 var token = localStorage.getItem("token");
 
-var pages = ['Ajout','Liste',  "Reports",  'Déconnexion'];
-if(token == null  || token === "disconnected"){
-    pages = ['Connexion', 'Inscription'];
-}
-else{
-    const decoded = jwtDecode(token);
-    // @ts-ignore
-    if(decoded.role === "admin"){
-        pages = ['Profil', "Ajout", 'Logout'];
+
+interface HeaderProps {
+    onToggleInterface: () => void; 
+    isToggleActive:  boolean; 
+  }
+  function Header({ onToggleInterface, isToggleActive }: HeaderProps) {
+    useEffect(() => {
+        setIsAuthorized(checkUserRole());
+    });
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    let pages;
+    if (isToggleActive) {
+        pages = ['Déconnexion'];
+    } else if (token == null || token === "disconnected") {
+        pages = ['Connexion', 'Inscription'];
+    } else{
+        pages = ['Ajout', 'Liste', 'Déconnexion']; 
     }
-}
-function Header() {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -128,9 +136,29 @@ function Header() {
                             <Link className={"header-link"} to={page}>{page}</Link>
                         ))}
                     </Box>
+                    {isAuthorized && (
+                        <button onClick={onToggleInterface} style={{ marginLeft: 'auto' }}>
+                            {isToggleActive ? <span>Contracts</span> : <span>Dashboard</span>}
+                        </button>
+                    )}
+
                 </Toolbar>
+             
             </Container>
         </AppBar>
     );
 }
 export default Header;
+
+function checkUserRole() : boolean{
+    var token = localStorage.getItem("token");
+     if(token !== null){
+      const decodedToken = jwtDecode<MyToken>(token);
+      if(decodedToken.role === "commercial"){ //might need to be changed to admin 
+          return true;
+        }
+      };
+      return false;
+  
+  }
+  

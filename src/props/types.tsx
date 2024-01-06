@@ -6,6 +6,7 @@ export type RowData = {
   
   export type Part = {
     id: number;
+    displayId : string;
     defaultPrice: number;
     Price: number;
 
