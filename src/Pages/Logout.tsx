@@ -4,7 +4,7 @@ import {MDBContainer, MDBRow } from 'mdb-react-ui-kit';
 export default function Logout() {
     useEffect(() => {
         const timer = setTimeout(() => {
-            localStorage.setItem("token", "disconnected")
+            localStorage.removeItem("token")
             window.location.replace("/");
         }, 3000);
         return () => clearTimeout(timer);

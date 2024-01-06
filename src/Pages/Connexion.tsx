@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput } from 'mdb-react-ui-kit';
-import { Link } from "react-router-dom";
 import axios from "axios";
+import {useNavigate, Link } from 'react-router-dom';
 
 export default function Connexion() {
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPasswordError, setShowPasswordError] = useState(false);
     const [showLoginError, setShowLoginError] = useState(false);
+    const navigate = useNavigate();
 
     const connect = async () => {
         if (password.length < 6) { 
@@ -20,7 +22,7 @@ export default function Connexion() {
         try {
             const data = await login(email, password);
             localStorage.setItem("token", data.data);
-            window.location.replace("/reports");
+            navigate('/Liste');
         } catch (error) {
             console.error('Connection error:', error);
             setShowLoginError(true); // Show login error

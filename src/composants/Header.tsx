@@ -31,7 +31,7 @@ interface HeaderProps {
     let pages;
     if (isToggleActive) {
         pages = ['Déconnexion'];
-    } else if (token == null || token === "disconnected") {
+    } else if (token == null ) {
         pages = ['Connexion', 'Inscription'];
     } else{
         pages = ['Ajout', 'Liste', 'Déconnexion']; 

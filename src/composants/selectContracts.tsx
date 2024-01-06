@@ -12,7 +12,7 @@ export default function SelectContracts(props: SelectContractsProps) {
       .then(data => {
         const updatedParts = data.map((part: Part) => ({
           ...part,
-          displayId: 'PART_NO_' + part.id  // Add a displayId field
+          displayId: 'PART_NO_' + part.id 
         }));
         setParts(updatedParts);
       })
@@ -28,9 +28,14 @@ export default function SelectContracts(props: SelectContractsProps) {
     marginRight : '10px',
     width: '20%'
   };
+
   const addRow = () => {
     setRows([...rows, { id: 0, quantity: 0, price: 0 }]);
   };
+
+  const findPartById = (partId: number) => {
+    return parts.find(part => part.id === partId) || null;
+  }
 
   return (
     <div className='AddParts'> 
@@ -39,13 +44,12 @@ export default function SelectContracts(props: SelectContractsProps) {
           <div style={{display : 'flex'}}>
             <Autocomplete
               options={parts}
-              getOptionLabel={(option) => option.displayId}  // Use displayId for displaying options
+              getOptionLabel={(option) => option.displayId}
               style={styleProductSelector}
-              value={parts.find(part => part.id === row.id)}
+              value={findPartById(row.id)}
               onChange={(event, newValue) => handleIdChange(index, newValue)}
               renderInput={(params) => <TextField {...params} label="Produit" />}
             />
-
 
             <TextField
               label="Quantité"

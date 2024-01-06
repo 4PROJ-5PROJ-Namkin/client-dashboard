@@ -45,3 +45,5 @@ body {
   .btn-primary{
     background-color: black!important;
   }
+  .card{margin: auto;}
+  .alert{margin-top: 10px;}

@@ -21,6 +21,9 @@ export default function Contract() {
     var curr = new Date();
     curr.setDate(curr.getDate() + 3);
     const [date, setDate] = useState<Date>(curr);
+    const [showFormError, setShowFormError] = useState(false);
+
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleIdChange = (index: number, newPart: Part | null) => {
         const newRows = [...rows];
@@ -95,6 +98,10 @@ export default function Contract() {
     const formattedDate = currentDate.toISOString().split('T')[0];
 
     const onSubmit = async () => {
+        setShowSuccess(false);
+        setShowFormError(false);
+
+
         let i = 0;
         let j = 0;
         let cash: number[] = [];
@@ -109,8 +116,11 @@ export default function Contract() {
         }
         try {
              await postContract(contract_number, client_name, partsTreated, cash, date);
-        } catch (error) {
-            console.error('Error creating account:', error);
+             setShowSuccess(true);
+
+             
+        }catch (error) {
+            setShowFormError(true);
         }
     };
     return (
@@ -134,8 +144,19 @@ export default function Contract() {
                                 parts={parts}
                                 setParts={setParts}
                             />
+                            {showFormError && (
+                                <div className="alert alert-warning" role="alert">
+                                    Impossible de créer le contrat
+                                </div>
+                            )}
+                            {showSuccess && (
+                                <div className="alert alert-success" role="alert">
+                                    Contrat ajouté avec succès
+                                </div>
+                            )}
                             <button type="button"  className={"btn custom"}onClick={onSubmit}>Valider</button>
                         </MDBCardBody>
+                        
                     </MDBCard>
                 </MDBCol>
             </MDBRow>
@@ -143,12 +164,13 @@ export default function Contract() {
     );
 }
 const postContract = async (contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
+    const formattedDate = date.toISOString().split('T')[0];
     const body = {
         contract_number: contract_number,
         client_name: client_name,
         parts: parts,
         cash: cash,
-        date: date
+        date: formattedDate
     };
     try {
         await axios.post('http://localhost:4002/api/v1/contracts', body);

@@ -26,7 +26,6 @@ interface TableRowData {
 
 export default function SingleContract() {
     const { contract_number } = useParams<{ contract_number: string }>();
-    console.log("====" + contract_number);
     const [contractData, setContractData] = useState<ContractData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -135,7 +134,7 @@ export default function SingleContract() {
             console.error('Error updating contract:', error);
         }
     };
-    console.log(contractData?.date);
+    
     return (
         <div className='container-flex'>
             <MDBContainer className='card-container'>
