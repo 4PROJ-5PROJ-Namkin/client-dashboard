@@ -137,7 +137,7 @@ interface HeaderProps {
                         ))}
                     </Box>
                     {isAuthorized && (
-                        <button onClick={onToggleInterface} style={{ marginLeft: 'auto' }}>
+                        <button onClick={onToggleInterface} className='toggleInterface' style={{ marginLeft: 'auto' }}>
                             {isToggleActive ? <span>Contracts</span> : <span>Dashboard</span>}
                         </button>
                     )}

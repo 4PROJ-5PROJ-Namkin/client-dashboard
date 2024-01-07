@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/msal": "^1.4.5",
+    "@azure/msal-react": "^2.0.8",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.11.11",
     "@mui/lab": "^5.0.0-alpha.154",
     "@mui/material": "^5.11.11",

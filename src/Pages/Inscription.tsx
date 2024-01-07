@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     MDBBtn,
     MDBContainer,
@@ -8,7 +8,9 @@ import {
     MDBRow,
     MDBCol,
 } from 'mdb-react-ui-kit';
+import { isUserLoggedIn } from '../utility/auth';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export default function Inscription() {
     const [nom, setNom] = useState<string>('');
@@ -16,7 +18,7 @@ export default function Inscription() {
     const [mail, setMail] = useState<string>('');
     const [mdp, setMdp] = useState<string>('');
     const [telephone, setTelephone] = useState<string>('');
-
+    const navigate = useNavigate();
     const onSubmit = async () => {
         try {
             await postRegister(nom, prenom, mail, mdp, telephone);
@@ -24,7 +26,12 @@ export default function Inscription() {
             console.error('Error creating account:', error);
         }
     };
-
+    useEffect(() => {
+        if (isUserLoggedIn()) {
+          navigate('/');
+        }
+      });
+    
     return (
         <MDBContainer fluid className='my-5'>
             <MDBRow className='g-0 align-items-center container' style={{ margin: "auto", width: "65vw" }}>

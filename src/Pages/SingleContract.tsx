@@ -7,7 +7,8 @@ import axios from "axios";
 import SelectContracts from '../composants/selectContracts';
 import { RowData, Part } from '../props/types';
 import "../styles/Contract.css"
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface ContractData {
     id: string;
@@ -30,7 +31,7 @@ export default function SingleContract() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
     const [isEditing, setIsEditing] = useState(false);
-
+    const [showSuccess, setShowSuccess] = useState(false);
     const [rows, setRows] = useState<RowData[]>([{ id: 0, quantity: 1, price: 0 }]);
     const [parts, setParts] = useState<Part[]>([]);
     const [client_name, setName] = useState<string>('');
@@ -106,9 +107,13 @@ export default function SingleContract() {
     const deleteContract = async() => {
         try {
             if(contract_number !== undefined){
-             await removeContract(contract_number);
+                const confirmDelete = window.confirm("Voulez-vous supprimer ce contrat ?");
+                if (confirmDelete) {
+                    await removeContract(contract_number);
+                    setShowSuccess(true);
+                    // window.location.replace("/liste");
+                }            
             }
-        //    window.location.replace("/liste");
         } catch (error) {
             console.error('Error removing contract :', error);
         }        
@@ -142,8 +147,9 @@ export default function SingleContract() {
                     <MDBCardBody>
                         <div className='flexed-dist'>
                             <h5 className="card-title">Contract Details</h5>
-                            <button onClick={deleteContract}><h5 className="card-title">Supprimer</h5></button>
-
+                            <button onClick={deleteContract} className="btn icon">
+                                <FontAwesomeIcon icon={faTrash} />
+                            </button>
                         </div>
                         <p><strong>Contract Number:</strong> {contractData?.contract_number}</p>
                         <p><strong>Client Name:</strong> {contractData?.client_name}</p>
@@ -168,6 +174,11 @@ export default function SingleContract() {
                                     ))}
                                 </tbody>
                             </table>
+                            {showSuccess && (
+                                <div className="alert alert-success" role="alert">
+                                    Contrat supprimé avec succès
+                                </div>
+                            )}
                         </div>
 
                     </MDBCardBody>
@@ -198,7 +209,7 @@ export default function SingleContract() {
                                     />
                                     <button type="button"  className={"btn custom"}onClick={onSubmit}>Valider</button>
                                 </MDBCardBody>
-                                
+                             
                             </MDBCard>
                         </MDBCol>
                     </MDBRow>

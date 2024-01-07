@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput } from 'mdb-react-ui-kit';
 import axios from "axios";
 import {useNavigate, Link } from 'react-router-dom';
+import { isUserLoggedIn } from '../utility/auth';
 
 export default function Connexion() {
     
@@ -11,6 +12,11 @@ export default function Connexion() {
     const [showLoginError, setShowLoginError] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (isUserLoggedIn()) {
+          navigate('/');
+        }
+      });
     const connect = async () => {
         if (password.length < 6) { 
             setShowPasswordError(true);
