@@ -22,7 +22,6 @@ export default function Contract() {
     curr.setDate(curr.getDate() + 3);
     const [date, setDate] = useState<Date>(curr);
     const [showFormError, setShowFormError] = useState(false);
-
     const [showSuccess, setShowSuccess] = useState(false);
 
     const handleIdChange = (index: number, newPart: Part | null) => {

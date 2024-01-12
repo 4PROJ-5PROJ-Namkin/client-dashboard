@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBCol, MDBRow, MDBInput } from 'mdb-react-ui-kit';
 import axios from "axios";
 import {useNavigate, Link } from 'react-router-dom';
 import { isUserLoggedIn } from '../utility/auth';
@@ -29,6 +29,7 @@ export default function Connexion() {
             const data = await login(email, password);
             localStorage.setItem("token", data.data);
             navigate('/Liste');
+            navigate(0);
         } catch (error) {
             console.error('Connection error:', error);
             setShowLoginError(true); // Show login error
