@@ -103,10 +103,12 @@ a {
 }
 
 .contractItem { 
-    flex: 1 1 calc(33.333% - 20px); /* Adjust the width minus the gap */
-    border: 1px solid #ccc; /* Optional: for border */
-    padding: 10px; /* Optional: for spacing */
-    box-sizing: border-box; /* To include padding and border in the width */
+    flex: 1 1 calc(33.333% - 20px);
+    border: 1px solid #ccc; 
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 10px 5px 5px #efefef;
+    background-color: white;
 }
 
 .pagination{
