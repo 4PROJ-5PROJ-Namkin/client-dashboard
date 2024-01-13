@@ -68,7 +68,7 @@ export default function Contracts() {
                 <ul className='pagination' >
                     {pageNumbers.map(number => (
                         <li key={number} className='page-item'>
-                            <a onClick={() => paginate(number)} className='page-link'>
+                            <a onClick={() => paginate(number)} className='page-link' style={{"color" : "black"}}>
                                 {number}
                             </a>
                         </li>

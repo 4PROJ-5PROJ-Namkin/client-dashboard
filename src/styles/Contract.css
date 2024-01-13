@@ -99,7 +99,7 @@ a {
 .contractList {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Adjust the gap as needed */
+    gap: 20px;
 }
 
 .contractItem { 
