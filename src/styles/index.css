@@ -60,6 +60,10 @@ body {
     margin-top: 5vh;
   }
 .reports{
+    margin-top: 20px!important;
     display: block!important;
     margin: auto;
+  }
+  table {
+    border: 1px solid;
   }

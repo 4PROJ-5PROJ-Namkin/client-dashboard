@@ -24,8 +24,9 @@ const PowerBIReport: React.FC<PowerBIReportProps> = ({ reportId, embedUrl }) => 
   }
   return (
     <div>
-      <h2 className='center'>Titre du rapport</h2>
-      <iframe title="test" className='reports' width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=17145a5f-ea8f-4541-9e35-d8529313dbf4&autoAuth=true&ctid=1dc8f08a-46f6-4cdb-b8ff-03e46c14979d" ></iframe>
+      {/* <h2 className='center'>Titre du rapport</h2> */}
+      <iframe title="Supply Chain Namkin" width="1140"  className='reports'  height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=1d011c1e-611b-4612-a48f-d2f80cbc9d47&autoAuth=true&ctid=1dc8f08a-46f6-4cdb-b8ff-03e46c14979d"></iframe>
+      {/* <iframe title="test"width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=17145a5f-ea8f-4541-9e35-d8529313dbf4&autoAuth=true&ctid=1dc8f08a-46f6-4cdb-b8ff-03e46c14979d" ></iframe> */}
     </div>
   )
 };

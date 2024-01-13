@@ -17,6 +17,7 @@ export default function SelectContracts(props: SelectContractsProps) {
         setParts(updatedParts);
       })
       .catch(error => console.error('Error fetching parts data:', error));
+      processInitialRowsData();
   }, []);
 
   const styleProductSelector = {
@@ -27,6 +28,20 @@ export default function SelectContracts(props: SelectContractsProps) {
   const styleQuantity = {
     marginRight : '10px',
     width: '20%'
+  };
+
+  const processInitialRowsData = () => {
+    const partsMap = new Map();
+    for (const row of rows) {
+      const key = `${row.id}-${row.price}`;
+      if (partsMap.has(key)) {
+        partsMap.get(key).quantity += row.quantity;
+      } else {
+        partsMap.set(key, { ...row });
+      }
+    }
+    const updatedRows = Array.from(partsMap.values());
+    setRows(updatedRows);
   };
 
   const addRow = () => {

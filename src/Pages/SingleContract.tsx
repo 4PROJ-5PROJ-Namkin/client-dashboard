@@ -31,12 +31,14 @@ export default function SingleContract() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
     const [isEditing, setIsEditing] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
+    const [showRMSuccess, setShowRMSuccess] = useState(false);
     const [rows, setRows] = useState<RowData[]>([{ id: 0, quantity: 1, price: 0 }]);
     const [parts, setParts] = useState<Part[]>([]);
     const [client_name, setName] = useState<string>('');
     const [date, setDate] = useState<Date>(new Date());
     const formattedDate = contractData?.date.split('T')[0];
+    const [showError, setShowError] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const computeTableRows = (): TableRowData[] => {
         const rowMap = new Map<string, TableRowData>();
@@ -56,29 +58,27 @@ export default function SingleContract() {
     };
     const tableRows = computeTableRows();
     useEffect(() => {
-    fetch(`http://localhost:4002/api/v1/contracts/${contract_number}`)
-        .then(response => response.json())
-        .then((data: ContractData) => {
-            setContractData(data);
-            setName(data.client_name);
-            setDate(new Date(data.date));
+        fetch(`http://localhost:4002/api/v1/contracts/${contract_number}`)
+            .then(response => response.json())
+            .then((data: ContractData) => {
+                setContractData(data);
+                setName(data.client_name);
+                setDate(new Date(data.date));
+                const convertedRows: RowData[] = data.cash.map((cash, index) => ({
+                    id: data.parts[index],
+                    quantity: 1,
+                    price: cash
+                }));
 
-            // Convert cash and parts arrays to RowData format
-            const convertedRows: RowData[] = data.cash.map((cash, index) => ({
-                id: data.parts[index],
-                quantity: 1, // Default quantity
-                price: cash
-            }));
-
-            setRows(convertedRows);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error("Error fetching data: ", error);
-            setError(error);
-            setLoading(false);
-        });
-}, [contract_number]);
+                setRows(convertedRows);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                setError(error);
+                setLoading(false);
+            });
+    }, [contract_number]);
 
 
     const handleIdChange = (index: number, newPart: Part | null) => {
@@ -86,44 +86,43 @@ export default function SingleContract() {
         const selectedPart = parts.find(part => part.id === newPart?.id);
         newRows[index].id = newPart?.id || 0;
         newRows[index].price = selectedPart?.defaultPrice || 0;
-    
+
         setRows(newRows);
-      };
-    
-      const handleQuantityChange = (index: number, value: number) => {
+    };
+
+    const handleQuantityChange = (index: number, value: number) => {
         const newRows = [...rows];
         newRows[index].quantity = value;
         setRows(newRows);
-      };
-    
-      const handlePriceChange = (index: number, value: number) => {
+    };
+
+    const handlePriceChange = (index: number, value: number) => {
         const newRows = [...rows];
         newRows[index].price = value;
         setRows(newRows);
-      };
-      const updateParts = (updatedParts: Part[]) => {
+    };
+    const updateParts = (updatedParts: Part[]) => {
         setParts(updatedParts);
     };
-    const deleteContract = async() => {
+    const deleteContract = async () => {
         try {
-            if(contract_number !== undefined){
+            if (contract_number !== undefined) {
                 const confirmDelete = window.confirm("Voulez-vous supprimer ce contrat ?");
                 if (confirmDelete) {
                     await removeContract(contract_number);
-                    setShowSuccess(true);
-                    // window.location.replace("/liste");
-                }            
+                    setShowRMSuccess(true);
+                }
             }
         } catch (error) {
-            console.error('Error removing contract :', error);
-        }        
+            console.error('Impossible de supprimer le contrat :', error);
+        }
     }
     const onSubmit = async () => {
         let i = 0;
         let j = 0;
         let cash: number[] = [];
         let partsTreated: number[] = [];
-        
+
         while (i < rows.length) {
             for (j = 0; j < rows[i].quantity; j++) {
                 cash.push(rows[i].price);
@@ -132,58 +131,65 @@ export default function SingleContract() {
             i++;
         }
         try {
-            if(contract_number !== undefined){
-             await updateContract(contract_number, client_name, partsTreated, cash, date);
+            if (contract_number !== undefined) {
+                await updateContract(contract_number, client_name, partsTreated, cash, date);
+                setShowSuccess(true);
             }
         } catch (error) {
-            console.error('Error updating contract:', error);
+            setShowError(true);
+            console.error('Impossible de mettre à jour le contrat : ', error);
         }
     };
-    
+
     return (
         <div className='container-flex'>
             <MDBContainer className='card-container'>
                 <MDBCard className='card'>
                     <MDBCardBody>
                         <div className='flexed-dist'>
-                            <h5 className="card-title">Contract Details</h5>
+                            <h5 className="card-title">Détails du contrat</h5>
                             <button onClick={deleteContract} className="btn icon">
                                 <FontAwesomeIcon icon={faTrash} />
                             </button>
                         </div>
-                        <p><strong>Contract Number:</strong> {contractData?.contract_number}</p>
-                        <p><strong>Client Name:</strong> {contractData?.client_name}</p>
-                        <p><strong>Date:</strong> {contractData?.date ? new Date(contractData.date).toLocaleString() : 'No date has been set'}</p>
-                        <div>
-                            <table className={"tableCenter"}>
-                                <thead>
-                                    <tr>
-                                        <th>Cash</th>
-                                        <th>Parts</th>
-                                        <th>Quantity</th>
+                        <div className='flex' >
+                            <div style={{ marginRight: "50px" }}>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {tableRows.map((row, index) => (
-                                        <tr key={index}>
-                                            <td>{row.cash}</td>
-                                            <td>PART_NO_{row.parts}</td>
-                                            <td>{row.quantity}</td>
+                                <p><strong>Numéro de contrat:</strong> {contractData?.contract_number}</p>
+                                <p><strong>Nom du client:</strong> {contractData?.client_name}</p>
+                                <p><strong>Date:</strong> {formattedDate ? formattedDate : 'No date has been set'}</p>
+                            </div>
+                            <div>
+                                <table className={"tableCenter"}>
+                                    <thead>
+                                        <tr>
+                                            <th>Prix</th>
+                                            <th>Pièce</th>
+                                            <th>Quantité</th>
+
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                            {showSuccess && (
-                                <div className="alert alert-success" role="alert">
-                                    Contrat supprimé avec succès
-                                </div>
-                            )}
+                                    </thead>
+                                    <tbody>
+                                        {tableRows.map((row, index) => (
+                                            <tr key={index}>
+                                                <td>{row.cash} €</td>
+                                                <td>PART_NO_{row.parts}</td>
+                                                <td>{row.quantity}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                {showRMSuccess && (
+                                    <div className="alert alert-success" role="alert">
+                                        Contrat supprimé avec succès
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                     </MDBCardBody>
                 </MDBCard>
-                <button type="button"  className={"btn custom"}onClick={() => setIsEditing(!isEditing)}>Mettre à jour ce contrat</button>
+                <button type="button" className={"btn custom"} onClick={() => setIsEditing(!isEditing)}>Mettre à jour ce contrat</button>
             </MDBContainer>
 
             {isEditing && (
@@ -194,10 +200,10 @@ export default function SingleContract() {
                                 <MDBCardBody className='p-5 shadow-5 text-center'>
                                     <h2 className="fw-bold mb-5">Mise à jour du contrat</h2>
                                     <div className='flexed'>
-                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text'   value={contractData?.contract_number}/>
-                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' onChange={(e) => setName(e.target.value)} placeholder={contractData?.client_name}/>
+                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text' value={contractData?.contract_number} />
+                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' onChange={(e) => setName(e.target.value)} placeholder={contractData?.client_name} />
                                     </div>
-                            <MDBInput wrapperClass='mb-4' label='Date' id='date' type='date' value={formattedDate} onChange={(e) => setDate(new Date(e.target.value))}  />
+                                    <MDBInput wrapperClass='mb-4' label='Date' id='date' type='date' value={formattedDate} onChange={(e) => setDate(new Date(e.target.value))} />
                                     <SelectContracts
                                         rows={rows}
                                         setRows={setRows}
@@ -207,10 +213,21 @@ export default function SingleContract() {
                                         parts={parts}
                                         setParts={setParts}
                                     />
-                                    <button type="button"  className={"btn custom"}onClick={onSubmit}>Valider</button>
+                                    {showError && (
+                                        <div className="alert alert-warning" role="alert">
+                                            Impossible de mettre à jour le contrat
+                                        </div>
+                                    )}
+                                    {showSuccess && (
+                                        <div className="alert alert-success" role="alert">
+                                            Contrat mis à jour avec succès
+                                        </div>
+                                    )}
+                                    <button type="button" className={"btn custom"} onClick={onSubmit}>Valider</button>
                                 </MDBCardBody>
-                             
+
                             </MDBCard>
+
                         </MDBCol>
                     </MDBRow>
                 </MDBContainer>
@@ -219,7 +236,7 @@ export default function SingleContract() {
     );
 }
 
-const updateContract = async ( contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
+const updateContract = async (contract_number: string, client_name: string, parts: number[], cash: number[], date: Date): Promise<void> => {
     const body = {
         client_name: client_name,
         parts: parts,
@@ -228,15 +245,15 @@ const updateContract = async ( contract_number: string, client_name: string, par
     };
 
     try {
-        await axios.put('http://localhost:4002/api/v1/contracts/'+ contract_number, body);
+        await axios.put('http://localhost:4002/api/v1/contracts/' + contract_number, body);
     } catch (err) {
         console.error('Could not update contract :', err);
         throw err;
     }
 }
-const removeContract = async (contract_number : string): Promise<void> => {
+const removeContract = async (contract_number: string): Promise<void> => {
     try {
-        await axios.delete('http://localhost:4002/api/v1/contracts/'+ contract_number);
+        await axios.delete('http://localhost:4002/api/v1/contracts/' + contract_number);
     } catch (err) {
         console.error('Could not delete contract :', err);
         throw err;
