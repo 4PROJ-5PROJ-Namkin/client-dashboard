@@ -123,7 +123,7 @@ export default function Contract() {
         }
     };
     return (
-        <MDBContainer fluid className='my-5' >
+        <MDBContainer fluid >
             <MDBRow className='g-0 align-items-center container' style={{ margin: "auto", width: "65vw" }}>
                 <MDBCol col='6'>
                     <MDBCard className='my-5 cascading-right' style={{ background: 'hsla(0, 0%, 100%, 0.55)', backdropFilter: 'blur(30px)' }}>

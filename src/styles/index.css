@@ -52,8 +52,9 @@ body {
     border: 1px solid
   }
   .toggleInterface{
-    background-color: white;
+    background-color:  rgb(205, 205, 205);
     border-radius: 5px;
+    border-color :  rgb(205, 205, 205);
   }
   .center{
     text-align: center;
