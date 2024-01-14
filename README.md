@@ -7,7 +7,7 @@ This service requires the gateway, users-service, and contract-service to functi
 To launch Client-Dashboard, use the command `docker compose up --build` executed at the root of the project. This initiates the necessary services and sets up the environment for the application to run.
 
 ## Features
-### User Registration and Login:
+### User Registration and Login
 Users must register and log in to access the tools provided by Client-Dashboard.
 ### SSO (Single Sign On)
 Sadly this feature isn't implemented because of no right was granted by the Azure administrator to access to the Azure AD. To bypass this issue, a basic RBAC (Role-Based Access Control) verification mechanism is implemented beforehand. By default, a user is assigned the role of "commercial" which allows for managing contracts and accessing dashboards.
