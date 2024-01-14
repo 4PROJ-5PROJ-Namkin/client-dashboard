@@ -7,7 +7,7 @@ const NotFound = () => {
     <div className="flex">
         <div>
       <h2>404 Not Found</h2>
-      <p>Aucune page à l'horizon, on continue de chercher.</p>
+      <p>No page on the horizon, we'll keep an eye on the radar !</p>
       
     </div>
         <div className="wrapper">

@@ -107,14 +107,14 @@ export default function SingleContract() {
     const deleteContract = async () => {
         try {
             if (contract_number !== undefined) {
-                const confirmDelete = window.confirm("Voulez-vous supprimer ce contrat ?");
+                const confirmDelete = window.confirm("Are you sure you want to remove this contract ?");
                 if (confirmDelete) {
                     await removeContract(contract_number);
                     setShowRMSuccess(true);
                 }
             }
         } catch (error) {
-            console.error('Impossible de supprimer le contrat :', error);
+            console.error('Cannot remove contract :', error);
         }
     }
     const onSubmit = async () => {
@@ -137,7 +137,7 @@ export default function SingleContract() {
             }
         } catch (error) {
             setShowError(true);
-            console.error('Impossible de mettre à jour le contrat : ', error);
+            console.error('Cannot update contract : ', error);
         }
     };
 
@@ -147,7 +147,7 @@ export default function SingleContract() {
                 <MDBCard className='card'>
                     <MDBCardBody>
                         <div className='flexed-dist'>
-                            <h5 className="card-title">Détails du contrat</h5>
+                            <h5 className="card-title">Contract details</h5>
                             <button onClick={deleteContract} className="btn icon">
                                 <FontAwesomeIcon icon={faTrash} />
                             </button>
@@ -155,17 +155,17 @@ export default function SingleContract() {
                         <div className='flex' >
                             <div style={{ marginRight: "50px" }}>
 
-                                <p><strong>Numéro de contrat:</strong> {contractData?.contract_number}</p>
-                                <p><strong>Nom du client:</strong> {contractData?.client_name}</p>
+                                <p><strong>Contract number:</strong> {contractData?.contract_number}</p>
+                                <p><strong>Client name:</strong> {contractData?.client_name}</p>
                                 <p><strong>Date:</strong> {formattedDate ? formattedDate : 'No date has been set'}</p>
                             </div>
                             <div>
                                 <table className={"tableCenter"}>
                                     <thead>
                                         <tr>
-                                            <th>Prix</th>
-                                            <th>Pièce</th>
-                                            <th>Quantité</th>
+                                            <th>Price</th>
+                                            <th>Part</th>
+                                            <th>Quantity</th>
 
                                         </tr>
                                     </thead>
@@ -181,7 +181,7 @@ export default function SingleContract() {
                                 </table>
                                 {showRMSuccess && (
                                     <div className="alert alert-success" role="alert">
-                                        Contrat supprimé avec succès
+                                        Contract successfully removed
                                     </div>
                                 )}
                             </div>
@@ -189,7 +189,7 @@ export default function SingleContract() {
 
                     </MDBCardBody>
                 </MDBCard>
-                <button type="button" className={"btn custom"} onClick={() => setIsEditing(!isEditing)}>Mettre à jour ce contrat</button>
+                <button type="button" className={"btn custom"} onClick={() => setIsEditing(!isEditing)}>Update this contract</button>
             </MDBContainer>
 
             {isEditing && (
@@ -215,15 +215,15 @@ export default function SingleContract() {
                                     />
                                     {showError && (
                                         <div className="alert alert-warning" role="alert">
-                                            Impossible de mettre à jour le contrat
+                                            Cannot update contract
                                         </div>
                                     )}
                                     {showSuccess && (
                                         <div className="alert alert-success" role="alert">
-                                            Contrat mis à jour avec succès
+                                            Contract successfully updated
                                         </div>
                                     )}
-                                    <button type="button" className={"btn custom"} onClick={onSubmit}>Valider</button>
+                                    <button type="button" className={"btn custom"} onClick={onSubmit}>Validate</button>
                                 </MDBCardBody>
 
                             </MDBCard>

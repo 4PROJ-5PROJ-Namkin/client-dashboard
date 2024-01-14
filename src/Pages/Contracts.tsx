@@ -47,9 +47,9 @@ export default function Contracts() {
     return (
         <div className="container">
             <div className="topbox">
-                <h1 className="title">Liste des contrats</h1>
+                <h1 className="title">Contracts list</h1>
                 <button className="button" onClick={toggleSortOrder}>
-                    Trier par numéro de contrat ({sortOrder === 'asc' ? 'Descendant' : 'Ascendant'})
+                    Order by contract number ({sortOrder === 'asc' ? 'Descendant' : 'Ascendant'})
                 </button>
             </div>  
             <div className="contractList">
@@ -76,7 +76,7 @@ export default function Contracts() {
                 </ul>
             </nav>
             <div className="bottombox">
-                <a type="button" href="/Ajout" className={"btn custom"}>Ajouter un contrat</a>
+                <a type="button" href="/Ajout" className={"btn custom"}>New contract</a>
             </div>
         </div>
     );

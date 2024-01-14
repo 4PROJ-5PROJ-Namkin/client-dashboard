@@ -41,11 +41,11 @@ export default function App() {
           ) : (
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="Connexion" element={<Connexion />} />
-          <Route path="Déconnexion" element={<Logout />} />
-          <Route path="Ajout" element={<Contract />} />
-          <Route path="Liste" element={<Contracts />} />
-          <Route path="Inscription" element={<Inscription />} />
+          <Route path="Login" element={<Connexion />} />
+          <Route path="Logout" element={<Logout />} />
+          <Route path="New" element={<Contract />} />
+          <Route path="List" element={<Contracts />} />
+          <Route path="Register" element={<Inscription />} />
           <Route path="contract/:contract_number" element={<SingleContract />} />
           <Route path="*" element={<NotFound />}/>
         </Routes>

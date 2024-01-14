@@ -30,11 +30,11 @@ interface HeaderProps {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     let pages;
     if (isToggleActive) {
-        pages = ['Déconnexion'];
+        pages = ['Logout'];
     } else if (token == null ) {
-        pages = ['Connexion', 'Inscription'];
+        pages = ['Login', 'Register'];
     } else{
-        pages = ['Ajout', 'Liste', 'Déconnexion']; 
+        pages = ['New', 'List', 'Logout']; 
     }
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

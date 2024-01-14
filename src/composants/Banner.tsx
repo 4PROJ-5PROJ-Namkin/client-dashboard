@@ -14,9 +14,9 @@ export default function Banner() {
       });
     return (
             <div className={"bannerPic"}>
-                <h1 className={"bannerTxt"}>Tableaux de bords et gestion des contrats</h1>
+                <h1 className={"bannerTxt"}>Dashboards and contracts management</h1>
                 {showConnexion && (
-                        <a type="button"  href="/connexion" className={"btn custom"}>Me connecter</a>
+                        <a type="button"  href="/Login" className={"btn custom"}>Login</a>
                 )}
             </div>
     )

@@ -128,7 +128,7 @@ export default function Contract() {
                 <MDBCol col='6'>
                     <MDBCard className='my-5 cascading-right' style={{ background: 'hsla(0, 0%, 100%, 0.55)', backdropFilter: 'blur(30px)' }}>
                         <MDBCardBody className='p-5 shadow-5 text-center'>
-                            <h2 className="fw-bold mb-5">Ajout d'un contrat</h2>
+                            <h2 className="fw-bold mb-5">New contract</h2>
                             <div className='flexed'>
                                 <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text' placeholder='2024-01-01A' onChange={(e) => setCnumber(e.target.value)} />
                                 <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' placeholder='John Doe' onChange={(e) => setName(e.target.value)} />
@@ -145,15 +145,15 @@ export default function Contract() {
                             />
                             {showFormError && (
                                 <div className="alert alert-warning" role="alert">
-                                    Impossible de créer le contrat
+                                    Error on contract creation
                                 </div>
                             )}
                             {showSuccess && (
                                 <div className="alert alert-success" role="alert">
-                                    Contrat ajouté avec succès
+                                    Contrat successfully created
                                 </div>
                             )}
-                            <button type="button"  className={"btn custom"}onClick={onSubmit}>Valider</button>
+                            <button type="button"  className={"btn custom"}onClick={onSubmit}>Validate</button>
                         </MDBCardBody>
                         
                     </MDBCard>

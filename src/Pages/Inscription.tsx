@@ -38,7 +38,7 @@ export default function Inscription() {
                 <MDBCol col='6'>
                     <MDBCard className='my-5 cascading-right eighty' style={{ background: 'hsla(0, 0%, 100%, 0.55)', backdropFilter: 'blur(30px)' }}>
                         <MDBCardBody className='p-5 shadow-5 text-center'>
-                            <h2 className="fw-bold mb-5">Inscription</h2>
+                            <h2 className="fw-bold mb-5">Register</h2>
                             <div className="flexed">
                                 <MDBInput wrapperClass='mb-4' label='Prénom' id='prenom' type='text' onChange={(e) => setPrenom(e.target.value)} />
                                 <MDBInput wrapperClass='mb-4' label='Nom' id='nom' type='text' onChange={(e) => setNom(e.target.value)} />
@@ -46,7 +46,7 @@ export default function Inscription() {
                             <MDBInput wrapperClass='mb-4' label='Email' id='mail' type='email' onChange={(e) => setMail(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Mot de passe' id='form4' type='password' onChange={(e) => setMdp(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Numéro de téléphone' id='telephone' type='tel' onChange={(e) => setTelephone(e.target.value)} />
-                            <MDBBtn className='w-100 mb-4' size='lg' onClick={onSubmit}>Valider</MDBBtn>
+                            <MDBBtn className='w-100 mb-4' size='lg' onClick={onSubmit}>Validate</MDBBtn>
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>

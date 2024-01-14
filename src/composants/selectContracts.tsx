@@ -63,7 +63,7 @@ export default function SelectContracts(props: SelectContractsProps) {
               style={styleProductSelector}
               value={findPartById(row.id)}
               onChange={(event, newValue) => handleIdChange(index, newValue)}
-              renderInput={(params) => <TextField {...params} label="Produit" />}
+              renderInput={(params) => <TextField {...params} label="Part" />}
             />
 
             <TextField

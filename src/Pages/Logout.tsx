@@ -12,7 +12,7 @@ export default function Logout() {
     return (
         <MDBContainer fluid className="p-3 my-5 h-custom">
             <MDBRow>
-              <h3>Vous avez été déconnecté avec succès, vous allez être redirigé d'ici quelques secondes</h3>
+              <h3>You have been successfully disconnected, you will be redirected in a few seconds</h3>
             </MDBRow>
         </MDBContainer>
     );

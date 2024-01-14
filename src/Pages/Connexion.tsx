@@ -32,7 +32,7 @@ export default function Connexion() {
             navigate(0);
         } catch (error) {
             console.error('Connection error:', error);
-            setShowLoginError(true); // Show login error
+            setShowLoginError(true); 
         }
     }
 
@@ -42,21 +42,21 @@ export default function Connexion() {
                 <MDBCol col='4' md='6'>
                     <MDBInput wrapperClass='mb-4' label='Mail' type='email' size="lg" 
                               onChange={(e) => setEmail(e.target.value)} />
-                    <MDBInput wrapperClass='mb-4' label='Mot de passe' type='password' size="lg" 
+                    <MDBInput wrapperClass='mb-4' label='Password' type='password' size="lg" 
                               onChange={(e) => setPassword(e.target.value)} />
                     {showPasswordError && (
                         <div className="alert alert-warning" role="alert">
-                            Le mot de passe n'est pas assez fort
+                            Password isn't strong enought
                         </div>
                     )}
                     {showLoginError && (
                         <div className="alert alert-warning" role="alert">
-                            Identifiant ou mot de passe incorrect!
+                            Incorrect login or password
                         </div>
                     )}
                     <div className='text-center text-md-start mt-4 pt-2'>
-                        <button type="button"  className={"btn custom"}onClick={connect}>Valider</button>
-                        <p className="small mt-2 pt-1 mb-2">Pas encore de compte ? <Link to={"/Inscription"}>Inscription</Link></p>
+                        <button type="button"  className={"btn custom"}onClick={connect}>Validate</button>
+                        <p className="small mt-2 pt-1 mb-2">Don't have an account yet ? <Link to={"/Register"}>Register</Link></p>
                     </div>
                 </MDBCol>
             </MDBRow>
