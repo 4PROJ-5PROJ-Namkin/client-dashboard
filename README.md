@@ -10,7 +10,7 @@ To launch Client-Dashboard, use the command `docker compose up --build` executed
 ### User Registration and Login
 Users must register and log in to access the tools provided by Client-Dashboard.
 ### SSO (Single Sign On)
-Sadly this feature isn't implemented because of no right was granted by the Azure administrator to access to the Azure AD. To bypass this issue, a basic RBAC (Role-Based Access Control) verification mechanism is implemented beforehand. By default, a user is assigned the role of "commercial" which allows for managing contracts and accessing dashboards.
+Sadly this feature isn't implemented because no right was granted by the Azure administrator to access to the Azure AD. To bypass this issue, a basic RBAC (Role-Based Access Control) verification mechanism is implemented beforehand. By default, a user is assigned the role of "commercial" which allows for managing contracts and accessing dashboards.
 ### Contract Management
 The user has the access to view the list of all his active contracts and create new one or delete existant one. All the operations of the CRUD are supported.
 ### Reporting tool
