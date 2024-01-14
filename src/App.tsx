@@ -34,7 +34,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<PowerBIReport reportId={'9f5830b9-2cd2-4103-965d-bcc452fed443'} embedUrl={'https://app.powerbi.com/reportEmbed?reportId=17145a5f-ea8f-4541-9e35-d8529313dbf4&autoAuth=true&ctid=1dc8f08a-46f6-4cdb-b8ff-03e46c14979d'} />} />
           <Route path="*" element={<NotFound />} /> 
-          <Route path="Déconnexion" element={<Logout />} />
+          <Route path="Logouy" element={<Logout />} />
 
         </Routes>
 

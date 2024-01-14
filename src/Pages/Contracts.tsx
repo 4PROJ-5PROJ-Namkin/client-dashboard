@@ -76,7 +76,7 @@ export default function Contracts() {
                 </ul>
             </nav>
             <div className="bottombox">
-                <a type="button" href="/Ajout" className={"btn custom"}>New contract</a>
+                <a type="button" href="/New" className={"btn custom"}>New contract</a>
             </div>
         </div>
     );

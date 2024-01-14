@@ -198,10 +198,10 @@ export default function SingleContract() {
                         <MDBCol col='6'>
                             <MDBCard className='my-5 cascading-right'>
                                 <MDBCardBody className='p-5 shadow-5 text-center'>
-                                    <h2 className="fw-bold mb-5">Mise à jour du contrat</h2>
+                                    <h2 className="fw-bold mb-5">Contract update</h2>
                                     <div className='flexed'>
-                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text' value={contractData?.contract_number} />
-                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' onChange={(e) => setName(e.target.value)} placeholder={contractData?.client_name} />
+                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Contract number' id='Nom' type='text' value={contractData?.contract_number} />
+                                        <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Client name' id='client' type='text' onChange={(e) => setName(e.target.value)} placeholder={contractData?.client_name} />
                                     </div>
                                     <MDBInput wrapperClass='mb-4' label='Date' id='date' type='date' value={formattedDate} onChange={(e) => setDate(new Date(e.target.value))} />
                                     <SelectContracts

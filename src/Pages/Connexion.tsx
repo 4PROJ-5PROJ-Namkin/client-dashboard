@@ -28,7 +28,7 @@ export default function Connexion() {
         try {
             const data = await login(email, password);
             localStorage.setItem("token", data.data);
-            navigate('/Liste');
+            navigate('/List');
             navigate(0);
         } catch (error) {
             console.error('Connection error:', error);

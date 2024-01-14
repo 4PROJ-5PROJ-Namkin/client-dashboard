@@ -130,8 +130,8 @@ export default function Contract() {
                         <MDBCardBody className='p-5 shadow-5 text-center'>
                             <h2 className="fw-bold mb-5">New contract</h2>
                             <div className='flexed'>
-                                <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Numéro de contrat' id='Nom' type='text' placeholder='2024-01-01A' onChange={(e) => setCnumber(e.target.value)} />
-                                <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Nom du client' id='client' type='text' placeholder='John Doe' onChange={(e) => setName(e.target.value)} />
+                                <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Contract number' id='Nom' type='text' placeholder='2024-01-01A' onChange={(e) => setCnumber(e.target.value)} />
+                                <MDBInput wrapperClass='mb-4' className="halfWitdh" label='Client name' id='client' type='text' placeholder='John Doe' onChange={(e) => setName(e.target.value)} />
                             </div>
                             <MDBInput wrapperClass='mb-4' label='Date' id='date' type='date' value={formattedDate} onChange={(e) => setDate(new Date(e.target.value))}  />
                             <SelectContracts
